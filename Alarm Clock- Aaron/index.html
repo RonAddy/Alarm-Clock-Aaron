@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Untitled Document</title>
+    
+</head>
+
+
+<style>
+    
+/* below font face is contained in folder to give the digital clock look*/
+    @font-face { 
+        
+        font-family: digital-7; 
+        src: url(digital-7.ttf); 
+    } 
+    
+    body {
+        background-image: url(watch.jpeg);
+        background-repeat: no-repeat;
+        background-position: 50% -20%;
+    }
+    
+    div {
+        position: 50%;
+    }
+    
+    form{
+        
+        margin-top: 18%;
+        position: relative;
+    }
+    #currentDay {
+        font-family: digital-7;
+        text-align: center;
+        font-size: 30pt;
+        border: transparent;
+        background-color: black;
+        color: crimson;
+        width:10%;
+        margin: 10px;
+    }
+    
+    #currentTime {
+        font-family: digital-7;
+        text-align: center;
+        font-size: 30pt;
+        border: transparent;
+        background-color: black;
+        color: floralwhite;
+        width:10%;
+        margin: 10px;
+    }
+</style>
+
+
+
+<body>
+
+   <center>
+   
+<!--Container for the clock inputs   -->
+    <div>
+        <form id="alarmScreen" name="clock" action="">
+            <input id="currentDay" type="text" name="day"> <!-- This input field will display the current day -->
+            <br>
+            <input id="currentTime"type="text" name="time"> <!-- This input field will display the current time -->
+            <br>
+        </form>
+    </div>
+    </center>
+    
+
+<script>
+
+//The "setTime()" function will first, format the time to a 12 hour setup (via the if statements), 
+//and disply the current time using the location time settings 
+//SetTimeout method will run the function every second (1000 milliseconds) so that the time is constantly running.
+    
+    function setTime() {
+    
+        var timeNow = new Date();
+        var timeHours = timeNow.getHours();
+        var timeMin = timeNow.getMinutes();
+        var meridiem= "AM"
+
+            if (timeHours == 0) {
+                timeHours == 12;
+            } else if (timeHours > 12) {
+                timeHours = timeHours - 12;
+                meridiem = "PM";
+            } 
+        
+            if (timeHours == 12) {
+                meridiem = "P.M";
+            }
+            if (timeHours < 10) {
+                timeHours = "0" + timeHours;
+            }
+
+            if (timeMin < 10) {
+                timeMin = "0" + timeMin;
+            }
+        
+        var showTime = timeHours + ":" + timeMin + " " + meridiem;
+
+
+        document.clock.time.value = showTime;
+
+        setTimeout("setTime()", 1000);
+    }
+    
+    setTime();
+    
+    
+//The setDay function will display the current day in the first input field above 
+//The days var holds an array of the all the days of the week
+//The today var will be assigned an index value refering to the current day (again using the device's location settings)
+//Line 117 will finaly assign the input value an index number, pulling the weekday string from the 'today' array
+    
+    function setDay() {
+        
+        var d = new Date();
+        var days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+        var today = d.getDay();
+        
+        
+        document.clock.day.value = days[today];
+    }
+    
+    setDay();
+    
+    
+//This was my sad attempt at providing a functional alarm system
+//My intentions were to provide a prompt upon start up to records users alarm time
+//That time would then be stored in a variable that would be used to comapre to the current time
+//If both matched, an alert will be initailized will a sound
+    
+    function setAlarm () {
+        
+        prompt("When will you like to be awoken? (Format--> hh:mm AM/PM)");
+        //User must put time in this format: hh:mm:meridiem
+        
+//        var alarmNow = new Date();
+//        var alarmHours = alarmNow.getHours();
+//        var alarmMin = alarmNow.getMinutes();
+//        var meridiem= "A.M"
+//        
+        
+        alert ("Wake UP!!!")
+        
+    }
+    
+    setAlarm();
+    
+</script>
+
+</body>
+
+
+
+</html>
